@@ -10,8 +10,8 @@
 
 # Como Usar
 
-#Clone este repositório:
-###Copy code:
+# Clone este repositório:
+### Copy code:
 git clone https://github.com/andersonvelos0/mobile/
 
 # Abra o arquivo index.html em seu navegador da web.
