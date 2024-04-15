@@ -21,37 +21,22 @@
                 });
             });
         }
-    </script>
 
-    <style>
-        /* Estilos para a lista de informações nutricionais */
-        #nutritionalInfo ul {
-            list-style-type: none;
-            padding: 0;
+        function startVoiceRecognition() {
+            const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+            recognition.lang = 'pt-BR';
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const query = event.results[0][0].transcript;
+                document.getElementById('foodQuery').value = query;
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Erro no reconhecimento de voz:', event.error);
+            };
         }
 
-        #nutritionalInfo li {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            padding: 15px;
-        }
-
-        #nutritionalInfo li:hover {
-            background-color: #f0f0f0;
-        }
-
-        #nutritionalInfo li p {
-            margin: 5px 0;
-        }
-
-        #nutritionalInfo li h3 {
-            margin-bottom: 10px;
-        }
-    </style>
-
-    <script>
         function fetchNutritionalInfo() {
             const foodQuery = document.getElementById('foodQuery').value;
             const appId = '74061e16';
@@ -148,20 +133,30 @@
     </div>
 </section>
 
-<section class="section">
-    <div class="container">
-        <h2 class="title">Consulta de Alimentos e Suas Informações Nutricionais Para Ajudar na Saúde do Corpo</h2>
-        <input type="text" id="foodQuery" placeholder="Digite o alimento...">
-        <button onclick="fetchNutritionalInfo()">Buscar Informações</button>
-        <div id="nutritionalInfo"></div>
-    </div>
-</section>
 <section id="contact" class="section">
     <div class="container">
         <h2 class="title">Entre em Contato</h2>
         <p>Para agendar um tratamento ou obter mais informações sobre nossos serviços, entre em contato conosco:</p>
         <p>Email: info@clinicaspa.com</p>
         <p>Telefone: (XX) XXXX-XXXX</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="title">Consulta de Informações Nutricionais</h2>
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <input class="input" type="text" id="foodQuery" placeholder="Digite o alimento...">
+            </div>
+            <div class="control">
+                <button class="button is-info" onclick="fetchNutritionalInfo()">Buscar</button>
+            </div>
+            <div class="control">
+                <button class="button is-info" onclick="startVoiceRecognition()">Pesquisar por Voz</button>
+            </div>
+        </div>
+        <div id="nutritionalInfo"></div>
     </div>
 </section>
 
