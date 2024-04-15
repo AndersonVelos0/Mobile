@@ -11,7 +11,13 @@ self.addEventListener('install', function(event) {
     caches.open(CACHE_NAME)
       .then(function(cache) {
         console.log('Cache aberto');
-        return cache.addAll(urlsToCache);
+        return Promise.all(
+          urlsToCache.map(function(url) {
+            return cache.add(url).catch(function(error) {
+              console.error('Falha ao adicionar ao cache:', error);
+            });
+          })
+        );
       })
   );
 });
@@ -24,7 +30,6 @@ self.addEventListener('fetch', function(event) {
           return response;
         }
         return fetch(event.request);
-      }
-    )
+      })
   );
 });
